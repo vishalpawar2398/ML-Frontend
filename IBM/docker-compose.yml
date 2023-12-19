@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+  web:
+    build: .
+    expose:
+      - "8000"
+    volumes:
+      - .:/app
+    depends_on:
+      - db
+
+  db:
+    image: mysql:latest
+    build: .
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: IBM
+      MYSQL_USER: MYSQL_ROOT_PASSWORD
+      MYSQL_PASSWORD: Vishal@123
+
+  nginx:
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
